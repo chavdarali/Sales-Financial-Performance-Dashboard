@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/alicavdar/Desktop/Financial Project/Financial project.db" readonly="0" foreign_keys="0" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="922"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="Product_Sales" custom_title="0" dock_id="1" table="4,13:mainProduct_Sales"/><dock_state state="000000ff00000000fd0000000100000002000001c30000021ffc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000000001c30000012000ffffff000001c30000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Product_Sales" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="61"/><column index="2" value="47"/><column index="3" value="86"/><column index="4" value="70"/><column index="5" value="64"/><column index="6" value="89"/><column index="7" value="93"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Sales" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="24"/><column index="2" value="60"/><column index="3" value="99"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">SELECT COUNT(*) AS Total_Calls
+FROM Product_Sales;
+
+SELECT SUM(ProductSold) AS Total_Sales
+FROM Product_Sales;
+
+SELECT
+ROUND(
+100.0 * SUM(ProductSold) / COUNT(*),
+2
+) AS Conversion_Rate_Percent
+FROM Product_Sales;
+
+SELECT
+Agent_Name,
+SUM(ProductSold) AS Sales
+FROM Product_Sales
+GROUP BY Agent_Name
+ORDER BY Sales DESC;
+
+SELECT
+Agent_Name,
+SUM(ProductSold) * 120 AS Revenue
+FROM Product_Sales
+GROUP BY Agent_Name
+ORDER BY Revenue DESC;
+
+SELECT
+Agent_Name,
+SUM(ProductSold) * 120 AS Revenue
+FROM Product_Sales
+GROUP BY Agent_Name
+ORDER BY Revenue DESC
+LIMIT 10;
+
+SELECT
+Agent_Name,
+ROUND(AVG(Duration),2) AS Avg_Call_Duration
+FROM Product_Sales
+GROUP BY Agent_Name
+ORDER BY Avg_Call_Duration DESC;
+
+SELECT
+Agent_Name,
+SUM(ProductSold) * 120 AS Revenue,
+SUM(Duration) AS Total_Minutes,
+ROUND(
+(SUM(ProductSold) * 120.0) /
+SUM(Duration),
+2
+) AS Revenue_Per_Minute
+FROM Product_Sales
+GROUP BY Agent_Name
+ORDER BY Revenue_Per_Minute DESC;
+
+SELECT
+COUNT(*) AS Missed_Calls
+FROM Product_Sales
+WHERE PickedUp = 0;
+
+SELECT
+Agent_Name,
+COUNT(*) AS Calls,
+SUM(ProductSold) AS Sales,
+ROUND(AVG(Duration),2) AS Avg_Duration,
+SUM(ProductSold) * 120 AS Revenue
+FROM Product_Sales
+GROUP BY Agent_Name
+ORDER BY Revenue DESC;</sql><current_tab id="0"/></tab_sql></sqlb_project>
